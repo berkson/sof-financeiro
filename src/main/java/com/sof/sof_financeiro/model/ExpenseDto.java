@@ -1,6 +1,7 @@
 package com.sof.sof_financeiro.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -8,8 +9,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.sof.sof_financeiro.enums.ExpenseStatus;
 import com.sof.sof_financeiro.enums.ExpenseType;
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +24,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created By : Berkson Ximenes
@@ -54,6 +57,8 @@ public class ExpenseDto {
     @NotBlank(message = "O credor deve ser informado")
     private String creditor;
     private String description;
-    @Positive(message = "O valor da despesa deve ser informado e maior que zero")
-    private BigDecimal value;
+    private ExpenseStatus status;
+    @JsonIgnore
+    private List<CommitmentDto> commitments = new ArrayList<>();
+
 }

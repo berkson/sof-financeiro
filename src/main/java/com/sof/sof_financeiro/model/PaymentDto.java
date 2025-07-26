@@ -33,7 +33,5 @@ public class PaymentDto {
     @JsonProperty(value = "date")
     @NotNull(message = "A data de pagamento deve ser informada")
     private LocalDate paymentDate;
-    @Positive(message = "O valor do pagamento deve ser informado e maior que zero")
-    private BigDecimal value;
     private String note;
 }

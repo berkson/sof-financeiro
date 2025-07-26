@@ -1,6 +1,10 @@
 package com.sof.sof_financeiro.model;
 
+import jakarta.validation.constraints.Positive;
 import lombok.*;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * Created By : Berkson Ximenes
@@ -12,4 +16,6 @@ import lombok.*;
 @NoArgsConstructor
 public class BaseDto {
     protected Long id;
+    @Positive(message = "O Valor obrigatório e maior que zero")
+    protected BigDecimal value;
 }

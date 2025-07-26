@@ -1,11 +1,13 @@
 package com.sof.sof_financeiro.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.sof.sof_financeiro.domain.Payment;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
@@ -15,6 +17,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created By : Berkson Ximenes
@@ -25,8 +29,6 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class CommitmentDto extends BaseDto {
-    @Positive(message = "Valor obrigatório e maior que zero")
-    private BigDecimal value;
     @JsonProperty(value = "number")
     private String commitmentNumber;
     @NotNull(message = "A data é obrigatória")
@@ -37,4 +39,6 @@ public class CommitmentDto extends BaseDto {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate commitmentDate;
     private String note;
+    @JsonIgnore
+    private List<PaymentDto> payments = new ArrayList<>();
 }
