@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +43,7 @@ public class Expense extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal value;
     @OneToMany(mappedBy = "expense", fetch = FetchType.LAZY)
-    private List<Commitment> commitment;
+    private List<Commitment> commitment = new ArrayList<>();
 
     @Override
     public boolean equals(Object obj) {
