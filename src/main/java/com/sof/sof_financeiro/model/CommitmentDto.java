@@ -30,7 +30,7 @@ public class CommitmentDto extends BaseDto {
     @NotNull(message = "A data é obrigatória")
     @JsonProperty(value = "date")
     @DateTimeFormat
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate commitmentDate;

@@ -6,15 +6,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.sof.sof_financeiro.domain.Commitment;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -25,7 +22,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PaymentDto {
+public class PaymentDto extends BaseDto {
     private String paymentNumber;
     @DateTimeFormat
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -35,5 +32,5 @@ public class PaymentDto {
     @NotNull(message = "A data de pagamento deve ser informada")
     private LocalDate paymentDate;
     private String note;
-    private Commitment commitment;
+    private Long commitmentId;
 }

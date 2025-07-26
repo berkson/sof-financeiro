@@ -8,8 +8,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {CommitmentMapper.class})
 public interface ExpenseMapper {
-    ExpenseMapper INSTANCE = Mappers.getMapper(ExpenseMapper.class);
-
     Expense expenseDtoToExpense(ExpenseDto expenseDto);
 
     ExpenseDto expenseToExpenseDto(Expense expense);

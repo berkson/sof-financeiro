@@ -5,15 +5,12 @@ import com.sof.sof_financeiro.model.CommitmentDto;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {PaymentMapper.class})
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {PaymentMapper.class, ExpenseMapper.class})
 public interface CommitmentMapper {
-    //CommitmentMapper INSTANCE = Mappers.getMapper(CommitmentMapper.class);
-
-    @Mapping(target = "expense", ignore = true)
+    @Mapping(target = "expense.commitments", ignore = true)
     Commitment commitmentDtoToCommitment(CommitmentDto commitmentDto);
 
-    @Mapping(target = "expense", ignore = true)
+    @Mapping(target = "expense.commitments", ignore = true)
     CommitmentDto commitmentToCommitmentDto(Commitment commitment);
 }
