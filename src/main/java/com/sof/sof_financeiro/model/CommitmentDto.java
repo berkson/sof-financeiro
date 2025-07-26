@@ -1,21 +1,17 @@
 package com.sof.sof_financeiro.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.sof.sof_financeiro.domain.Payment;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +35,6 @@ public class CommitmentDto extends BaseDto {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate commitmentDate;
     private String note;
-    @JsonIgnore
+    private ExpenseDto expense;
     private List<PaymentDto> payments = new ArrayList<>();
 }

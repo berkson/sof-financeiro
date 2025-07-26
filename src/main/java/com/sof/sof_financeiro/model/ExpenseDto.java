@@ -58,7 +58,6 @@ public class ExpenseDto {
     private String creditor;
     private String description;
     private ExpenseStatus status;
-    @JsonIgnore
     private List<CommitmentDto> commitments = new ArrayList<>();
 
 }

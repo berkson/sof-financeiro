@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.sof.sof_financeiro.domain.Commitment;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
@@ -34,4 +35,5 @@ public class PaymentDto {
     @NotNull(message = "A data de pagamento deve ser informada")
     private LocalDate paymentDate;
     private String note;
+    private Commitment commitment;
 }
