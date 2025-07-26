@@ -25,8 +25,6 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class CommitmentDto extends BaseDto {
-    @Positive(message = "Id deve ser válido")
-    private Long id;
     @Positive(message = "Valor obrigatório e maior que zero")
     private BigDecimal value;
     @JsonProperty(value = "number")
