@@ -43,7 +43,7 @@ public class Expense extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal value;
     @OneToMany(mappedBy = "expense", fetch = FetchType.LAZY)
-    private List<Commitment> commitment = new ArrayList<>();
+    private List<Commitment> commitments = new ArrayList<>();
 
     @Override
     public boolean equals(Object obj) {
