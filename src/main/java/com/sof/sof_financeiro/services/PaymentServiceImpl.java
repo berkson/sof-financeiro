@@ -1,8 +1,8 @@
 package com.sof.sof_financeiro.services;
 
+import com.sof.sof_financeiro.api.v1.model.PaymentDto;
 import com.sof.sof_financeiro.domain.Payment;
 import com.sof.sof_financeiro.mappers.PaymentMapper;
-import com.sof.sof_financeiro.api.v1.model.PaymentDto;
 import com.sof.sof_financeiro.repository.PaymentRepository;
 import com.sof.sof_financeiro.util.NumberGeneratorUtil;
 import org.springframework.stereotype.Service;
@@ -47,4 +47,8 @@ public class PaymentServiceImpl implements PaymentService {
         paymentRepository.deleteById(id);
     }
 
+    @Override
+    public boolean existsByCommitmentId(Long id) {
+        return paymentRepository.existsPaymentByCommitment_Id(id);
+    }
 }

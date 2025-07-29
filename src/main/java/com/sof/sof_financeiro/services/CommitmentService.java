@@ -8,4 +8,5 @@ import com.sof.sof_financeiro.api.v1.model.CommitmentDto;
  **/
 
 public interface CommitmentService extends BaseService<CommitmentDto, Long> {
+    boolean existsByExpenseId(Long id);
 }

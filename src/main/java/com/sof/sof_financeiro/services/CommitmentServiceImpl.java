@@ -45,4 +45,9 @@ public class CommitmentServiceImpl implements CommitmentService {
     public void delete(Long id) {
         commitmentRepository.deleteById(id);
     }
+
+    @Override
+    public boolean existsByExpenseId(Long id) {
+        return commitmentRepository.existsCommitmentByExpense_Id(id);
+    }
 }

@@ -1,9 +1,8 @@
 package com.sof.sof_financeiro.validations.validators;
 
-import com.sof.sof_financeiro.api.v1.model.ExpenseDto;
 import com.sof.sof_financeiro.services.CommitmentService;
-import com.sof.sof_financeiro.services.ExpenseService;
-import com.sof.sof_financeiro.validations.annotations.ExpenseCanBeExcluded;
+import com.sof.sof_financeiro.services.PaymentService;
+import com.sof.sof_financeiro.validations.annotations.CommitmentCanBeExcluded;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +14,18 @@ import org.springframework.stereotype.Component;
  **/
 
 @Component
-public class ExpenseCanBeExcludedValidator implements ConstraintValidator<ExpenseCanBeExcluded, Long> {
+public class CommitmentCanBeExcludedValidator implements ConstraintValidator<CommitmentCanBeExcluded, Long> {
 
-    private CommitmentService commitmentService;
+    private PaymentService paymentService;
 
 
     @Override
     public boolean isValid(Long id, ConstraintValidatorContext constraintValidatorContext) {
-        return !commitmentService.existsByExpenseId(id);
+        return !paymentService.existsByCommitmentId(id);
     }
 
     @Autowired
-    public void setCommitmentService(CommitmentService commitmentService) {
-        this.commitmentService = commitmentService;
+    public void setPaymentService(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 }

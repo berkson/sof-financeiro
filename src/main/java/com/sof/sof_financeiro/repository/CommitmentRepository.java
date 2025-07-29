@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface CommitmentRepository extends JpaRepository<Commitment, Long> {
     Commitment findTopByOrderByIdDesc();
+    Boolean existsCommitmentByExpense_Id(Long id);
 }
