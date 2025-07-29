@@ -1,6 +1,6 @@
 package com.sof.sof_financeiro.util;
 
-import com.sof.sof_financeiro.model.BaseDto;
+import com.sof.sof_financeiro.api.v1.model.BaseDto;
 
 import java.math.BigDecimal;
 import java.util.List;

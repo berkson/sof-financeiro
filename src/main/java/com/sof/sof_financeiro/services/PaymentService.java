@@ -1,6 +1,6 @@
 package com.sof.sof_financeiro.services;
 
-import com.sof.sof_financeiro.model.PaymentDto;
+import com.sof.sof_financeiro.api.v1.model.PaymentDto;
 
 /**
  * Created By : Berkson Ximenes

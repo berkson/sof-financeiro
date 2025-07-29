@@ -2,7 +2,7 @@ package com.sof.sof_financeiro.services;
 
 import com.sof.sof_financeiro.domain.Commitment;
 import com.sof.sof_financeiro.mappers.CommitmentMapper;
-import com.sof.sof_financeiro.model.CommitmentDto;
+import com.sof.sof_financeiro.api.v1.model.CommitmentDto;
 import com.sof.sof_financeiro.repository.CommitmentRepository;
 import com.sof.sof_financeiro.util.NumberGeneratorUtil;
 import org.springframework.stereotype.Service;

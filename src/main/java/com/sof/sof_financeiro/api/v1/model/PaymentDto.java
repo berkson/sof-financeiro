@@ -1,4 +1,4 @@
-package com.sof.sof_financeiro.model;
+package com.sof.sof_financeiro.api.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

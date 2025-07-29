@@ -1,6 +1,6 @@
 package com.sof.sof_financeiro.services;
 
-import com.sof.sof_financeiro.model.ExpenseDto;
+import com.sof.sof_financeiro.api.v1.model.ExpenseDto;
 
 /**
  * Created By : Berkson Ximenes
