@@ -1,6 +1,6 @@
 package com.sof.sof_financeiro.services;
 
-import com.sof.sof_financeiro.model.CommitmentDto;
+import com.sof.sof_financeiro.api.v1.model.CommitmentDto;
 
 /**
  * Created By : Berkson Ximenes
@@ -8,4 +8,5 @@ import com.sof.sof_financeiro.model.CommitmentDto;
  **/
 
 public interface CommitmentService extends BaseService<CommitmentDto, Long> {
+    boolean existsByExpenseId(Long id);
 }

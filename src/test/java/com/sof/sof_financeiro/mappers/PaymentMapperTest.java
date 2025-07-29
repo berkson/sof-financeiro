@@ -2,7 +2,7 @@ package com.sof.sof_financeiro.mappers;
 
 import com.sof.sof_financeiro.domain.Commitment;
 import com.sof.sof_financeiro.domain.Payment;
-import com.sof.sof_financeiro.model.PaymentDto;
+import com.sof.sof_financeiro.api.v1.model.PaymentDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

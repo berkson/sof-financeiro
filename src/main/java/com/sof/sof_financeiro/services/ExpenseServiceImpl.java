@@ -2,7 +2,7 @@ package com.sof.sof_financeiro.services;
 
 import com.sof.sof_financeiro.domain.Expense;
 import com.sof.sof_financeiro.mappers.ExpenseMapper;
-import com.sof.sof_financeiro.model.ExpenseDto;
+import com.sof.sof_financeiro.api.v1.model.ExpenseDto;
 import com.sof.sof_financeiro.repository.ExpenseRepository;
 import com.sof.sof_financeiro.util.NumberGeneratorUtil;
 import org.springframework.stereotype.Service;
