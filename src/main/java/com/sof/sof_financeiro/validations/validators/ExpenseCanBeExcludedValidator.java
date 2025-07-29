@@ -1,8 +1,6 @@
 package com.sof.sof_financeiro.validations.validators;
 
-import com.sof.sof_financeiro.api.v1.model.ExpenseDto;
 import com.sof.sof_financeiro.services.CommitmentService;
-import com.sof.sof_financeiro.services.ExpenseService;
 import com.sof.sof_financeiro.validations.annotations.ExpenseCanBeExcluded;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -22,6 +20,9 @@ public class ExpenseCanBeExcludedValidator implements ConstraintValidator<Expens
 
     @Override
     public boolean isValid(Long id, ConstraintValidatorContext constraintValidatorContext) {
+        if (id == null) {
+            return false;
+        }
         return !commitmentService.existsByExpenseId(id);
     }
 

@@ -21,6 +21,7 @@ public class CommitmentCanBeExcludedValidator implements ConstraintValidator<Com
 
     @Override
     public boolean isValid(Long id, ConstraintValidatorContext constraintValidatorContext) {
+        if(id == null) return false;
         return !paymentService.existsByCommitmentId(id);
     }
 
