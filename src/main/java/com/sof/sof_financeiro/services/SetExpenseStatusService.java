@@ -27,17 +27,22 @@ public class SetExpenseStatusService {
         this.expenseRepository = expenseRepository;
     }
 
-    public void checkAndSetStatus(Long expenseId) {
-        Expense expense = expenseRepository.findById(expenseId).orElseThrow();
+    public void checkAndSetStatus(Expense expense) {
+        if (expense.getId() == null) {
+            expense.setStatus(ExpenseStatus.WAITING_COMMITMENT);
+            return;
+        }
         BigDecimal commitmentSum = commitmentRepository.sumCommitmentsByExpense(expense.getId());
-        int cmp = expense.getValue().compareTo(commitmentSum);
+        int cmp = commitmentSum.compareTo(expense.getValue());
 
         if (commitmentSum.compareTo(BigDecimal.ZERO) == 0) {
+            changeStatus(expense.getId(), ExpenseStatus.WAITING_COMMITMENT);
             expense.setStatus(ExpenseStatus.WAITING_COMMITMENT);
             return;
         }
 
         if (cmp < 0) {
+            changeStatus(expense.getId(), ExpenseStatus.PARTIAL_COMMITMENT);
             expense.setStatus(ExpenseStatus.PARTIAL_COMMITMENT);
             return;
         }
@@ -50,14 +55,21 @@ public class SetExpenseStatusService {
 
             // Não há registro de pagamentos
             if (paymentCmp == 0) {
+                changeStatus(expense.getId(), ExpenseStatus.WAITING_PAYMENT);
                 expense.setStatus(ExpenseStatus.WAITING_PAYMENT);
                 return;
             } else if (paymentSum.compareTo(expense.getValue()) < 0) {
+                changeStatus(expense.getId(), ExpenseStatus.PARTIAL_PAYMENT);
                 expense.setStatus(ExpenseStatus.PARTIAL_PAYMENT);
             } else if (paymentSum.compareTo(expense.getValue()) == 0) {
+                changeStatus(expense.getId(), ExpenseStatus.PAID);
                 expense.setStatus(ExpenseStatus.PAID);
             }
         }
 
+    }
+
+    private void changeStatus(Long expenseId, ExpenseStatus status) {
+        expenseRepository.saveStatus(expenseId, status);
     }
 }

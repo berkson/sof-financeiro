@@ -15,6 +15,6 @@ public interface CommitmentRepository extends JpaRepository<Commitment, Long> {
     Boolean existsCommitmentByExpense_Id(Long id);
     List<Commitment> findCommitmentsByExpense_Id(Long id);
 
-    @Query("SELECT COALESCE(SUM(c.value), 0) FROM Commitment c WHERE c.expense = :expense")
+    @Query("SELECT COALESCE(SUM(c.value), 0) FROM Commitment c WHERE c.expense.id = :expenseId")
     BigDecimal sumCommitmentsByExpense(@Param(value = "expenseId") Long expenseId);
 }

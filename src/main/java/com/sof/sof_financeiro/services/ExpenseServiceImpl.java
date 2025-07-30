@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -33,6 +35,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public ExpenseDto save(ExpenseDto entity) {
         Expense expense = expenseMapper.expenseDtoToExpense(entity);
         if (expense.getId() == null) {
@@ -40,8 +43,8 @@ public class ExpenseServiceImpl implements ExpenseService {
             String lastProtocol = lastExpense != null ? lastExpense.getProtocolNumber() : "";
             expense.setProtocolNumber(NumberGeneratorUtil.getNextProtocol(lastProtocol));
         }
+        setExpenseStatusService.checkAndSetStatus(expense);
         Expense savedExpense = expenseRepository.save(expense);
-        setExpenseStatusService.checkAndSetStatus(expense.getId());
         return expenseMapper.expenseToExpenseDto(savedExpense);
     }
 
