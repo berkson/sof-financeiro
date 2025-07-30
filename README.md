@@ -50,9 +50,9 @@ Este projeto foi desenvolvido como parte de um processo seletivo e demonstra hab
 - docker-compose.yaml: Criação do container com PostgreSQL.
 
 📄 Licença
-Este projeto é de uso livre.
+ - Este projeto é de uso livre.
 
 👤 Autor
-Berkson
-GitHub [Sop-Financeiro](https://github.com/berkson/sop-financeiro)
+ - Berkson
+ - GitHub: [Sop-Financeiro](https://github.com/berkson/sop-financeiro)
    
