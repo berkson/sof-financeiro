@@ -41,13 +41,19 @@ Este projeto foi desenvolvido como parte de um processo seletivo e demonstra hab
    ```bash
    ./mvnw spring-boot:run
 
-**O Flyway se encarregará de criar o banco de dados e aplicar as migrações iniciais automaticamente.**
-
+Nota: **O Flyway se encarregará de criar o banco de dados e aplicar as migrações iniciais automaticamente.**
 
 📂 Estrutura do Projeto
-- src/main/java: Código-fonte da aplicação.
-- src/main/resources/db/migration: Scripts Flyway (.sql) para criação de tabelas.
-- docker-compose.yaml: Criação do container com PostgreSQL.
+ ```bash
+sop-financeiro/
+├── src/
+│   └── main/
+│       ├── java/                  # Código-fonte da aplicação
+│       └── resources/
+│           └── db/migration/     # Scripts SQL do Flyway
+├── docker-compose.yaml           # Define o container PostgreSQL
+├── pom.xml                       # Dependências Maven
+```
 
 📄 Licença
  - Este projeto é de uso livre.
@@ -55,4 +61,3 @@ Este projeto foi desenvolvido como parte de um processo seletivo e demonstra hab
 👤 Autor
  - Berkson
  - GitHub: [Sop-Financeiro](https://github.com/berkson/sop-financeiro)
-   
