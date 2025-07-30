@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -30,7 +31,7 @@ import java.util.stream.Stream;
 
 @RestControllerAdvice
 @Slf4j
-public class RestExceptionHandler {
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     private final MessageSource messageSource;
 
     public RestExceptionHandler(MessageSource messageSource) {
@@ -48,10 +49,11 @@ public class RestExceptionHandler {
     }
 
 
-    @ExceptionHandler({MethodArgumentNotValidException.class})
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   @NonNull HttpHeaders headers,
-                                                                  @NonNull HttpStatusCode status, @NonNull WebRequest request) {
+                                                                  @NonNull HttpStatusCode status,
+                                                                  @NonNull WebRequest request) {
 
         List<String> validationErrors = extractValidationErrors(ex.getBindingResult());
 

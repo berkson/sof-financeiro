@@ -1,6 +1,7 @@
 package com.sof.sof_financeiro.api.v1.model;
 
 import com.sof.sof_financeiro.shared.HasValue;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class BaseDto implements HasValue {
     protected Long id;
-    @Positive(message = "O Valor obrigatório e maior que zero")
+    @Positive(message = "{valor.not.null}")
+    @NotNull(message = "{valor.not.null}")
     protected BigDecimal value;
 }

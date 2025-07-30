@@ -1,10 +1,16 @@
 package com.sof.sof_financeiro.services;
 
-import com.sof.sof_financeiro.domain.Expense;
-import com.sof.sof_financeiro.mappers.ExpenseMapper;
 import com.sof.sof_financeiro.api.v1.model.ExpenseDto;
+import com.sof.sof_financeiro.domain.Expense;
+import com.sof.sof_financeiro.enums.ExpenseStatus;
+import com.sof.sof_financeiro.enums.ExpenseType;
+import com.sof.sof_financeiro.mappers.ExpenseMapper;
 import com.sof.sof_financeiro.repository.ExpenseRepository;
+import com.sof.sof_financeiro.repository.specifications.ExpenseSpecifications;
 import com.sof.sof_financeiro.util.NumberGeneratorUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -47,7 +53,14 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public void delete(Long id) {
-        //TODO: fazer validação
         expenseRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<ExpenseDto> getExpensesFiltered(ExpenseType type, ExpenseStatus status, Pageable pageable) {
+        Specification<Expense> specification = (ExpenseSpecifications.hasExpenseType(type))
+                .and(ExpenseSpecifications.hasStatus(status));
+        return expenseRepository.findAll(specification, pageable)
+                .map(expenseMapper::expenseToExpenseDto);
     }
 }

@@ -1,6 +1,8 @@
 package com.sof.sof_financeiro.services;
 
 import com.sof.sof_financeiro.api.v1.model.PaymentDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 /**
  * Created By : Berkson Ximenes
@@ -9,4 +11,6 @@ import com.sof.sof_financeiro.api.v1.model.PaymentDto;
 
 public interface PaymentService extends BaseService<PaymentDto, Long> {
     boolean existsByCommitmentId(Long id);
+
+    Page<PaymentDto> getPaymentsByCommitment(Long id, PageRequest pageRequest);
 }
