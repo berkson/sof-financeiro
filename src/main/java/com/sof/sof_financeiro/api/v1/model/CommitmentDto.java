@@ -29,7 +29,7 @@ import java.util.List;
 public class CommitmentDto extends BaseDto {
     @JsonProperty(value = "number")
     private String commitmentNumber;
-    @NotNull(message = "A data é obrigatória")
+    @NotNull(message = "{commitment.date.not.null}")
     @JsonProperty(value = "date")
     @DateTimeFormat
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -37,6 +37,7 @@ public class CommitmentDto extends BaseDto {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate commitmentDate;
     private String note;
+    @NotNull(message = "{expense.not.null}")
     private ExpenseDto expense;
     private List<PaymentDto> payments = new ArrayList<>();
 }

@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class BaseDto implements HasValue {
     protected Long id;
-    @Positive(message = "{valor.not.null}")
-    @NotNull(message = "{valor.not.null}")
+    @Positive(message = "{value.not.null}")
+    @NotNull(message = "{value.not.null}")
     protected BigDecimal value;
 }

@@ -37,10 +37,10 @@ import java.util.List;
 public class ExpenseDto extends BaseDto {
     @JsonProperty(value = "number")
     private String protocolNumber;
-    @NotNull(message = "{tipo.despesa.not.null}")
+    @NotNull(message = "{expense.type.not.null}")
     @Enumerated(EnumType.STRING)
     private ExpenseType expenseType;
-    @NotNull(message = "{data.protocolo.not.null}")
+    @NotNull(message = "{protocol.date.not.null}")
     @JsonProperty(value = "date")
     @DateTimeFormat
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
@@ -51,9 +51,9 @@ public class ExpenseDto extends BaseDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @NotNull(message = "{data.vencimento.not.null}")
+    @NotNull(message = "{expire.date.not.null}")
     private LocalDate expireDate;
-    @NotBlank(message = "{credor.not.null}")
+    @NotBlank(message = "{creditor.not.null}")
     private String creditor;
     private String description;
     @Enumerated(EnumType.STRING)

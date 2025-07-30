@@ -21,13 +21,13 @@ import java.util.Optional;
  **/
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
-    private final SetPaymentStatusService setPaymentStatusService;
+    private final SetExpenseStatusService setExpenseStatusService;
     private final ExpenseMapper expenseMapper;
     private final ExpenseRepository expenseRepository;
 
-    public ExpenseServiceImpl(SetPaymentStatusService setPaymentStatusService,
+    public ExpenseServiceImpl(SetExpenseStatusService setExpenseStatusService,
                               ExpenseMapper expenseMapper, ExpenseRepository expenseRepository) {
-        this.setPaymentStatusService = setPaymentStatusService;
+        this.setExpenseStatusService = setExpenseStatusService;
         this.expenseMapper = expenseMapper;
         this.expenseRepository = expenseRepository;
     }
@@ -40,8 +40,8 @@ public class ExpenseServiceImpl implements ExpenseService {
             String lastProtocol = lastExpense != null ? lastExpense.getProtocolNumber() : "";
             expense.setProtocolNumber(NumberGeneratorUtil.getNextProtocol(lastProtocol));
         }
-        setPaymentStatusService.checkAndSetStatus(expense);
         Expense savedExpense = expenseRepository.save(expense);
+        setExpenseStatusService.checkAndSetStatus(expense.getId());
         return expenseMapper.expenseToExpenseDto(savedExpense);
     }
 

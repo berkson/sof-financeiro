@@ -4,6 +4,7 @@ import com.sof.sof_financeiro.domain.Commitment;
 import com.sof.sof_financeiro.domain.Expense;
 import com.sof.sof_financeiro.enums.ExpenseStatus;
 import com.sof.sof_financeiro.repository.CommitmentRepository;
+import com.sof.sof_financeiro.repository.ExpenseRepository;
 import com.sof.sof_financeiro.repository.PaymentRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +16,19 @@ import java.util.List;
  * Date : 28/07/2025
  **/
 @Service
-public class SetPaymentStatusService {
+public class SetExpenseStatusService {
     private final CommitmentRepository commitmentRepository;
     private final PaymentRepository paymentRepository;
+    private final ExpenseRepository expenseRepository;
 
-    public SetPaymentStatusService(CommitmentRepository commitmentRepository, PaymentRepository paymentRepository) {
+    public SetExpenseStatusService(CommitmentRepository commitmentRepository, PaymentRepository paymentRepository, ExpenseRepository expenseRepository) {
         this.commitmentRepository = commitmentRepository;
         this.paymentRepository = paymentRepository;
+        this.expenseRepository = expenseRepository;
     }
 
-    public void checkAndSetStatus(Expense expense) {
-        if (expense.getId() == null) {
-            expense.setStatus(ExpenseStatus.WAITING_COMMITMENT);
-            return;
-        }
+    public void checkAndSetStatus(Long expenseId) {
+        Expense expense = expenseRepository.findById(expenseId).orElseThrow();
         BigDecimal commitmentSum = commitmentRepository.sumCommitmentsByExpense(expense.getId());
         int cmp = expense.getValue().compareTo(commitmentSum);
 
