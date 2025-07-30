@@ -2,6 +2,7 @@ package com.sof.sof_financeiro.api.v1.controller;
 
 import com.sof.sof_financeiro.api.v1.model.PaymentDto;
 import com.sof.sof_financeiro.services.PaymentService;
+import com.sof.sof_financeiro.validations.annotations.CheckPaymentValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +27,7 @@ public class PaymentController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public PaymentDto save(@RequestBody PaymentDto paymentDto) {
+    public PaymentDto save(@RequestBody @CheckPaymentValue PaymentDto paymentDto) {
         return paymentService.save(paymentDto);
     }
 
