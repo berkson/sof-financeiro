@@ -5,6 +5,8 @@ import com.sof.sof_financeiro.domain.Payment;
 import com.sof.sof_financeiro.mappers.PaymentMapper;
 import com.sof.sof_financeiro.repository.PaymentRepository;
 import com.sof.sof_financeiro.util.NumberGeneratorUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -50,5 +52,11 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public boolean existsByCommitmentId(Long id) {
         return paymentRepository.existsPaymentByCommitment_Id(id);
+    }
+
+    @Override
+    public Page<PaymentDto> getPaymentsByCommitment(Long id, PageRequest pageRequest) {
+        return paymentRepository.findPaymentsByCommitment_Id(id, pageRequest)
+                .map(paymentMapper::paymentToPaymentDto);
     }
 }

@@ -1,6 +1,7 @@
 package com.sof.sof_financeiro.api.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -32,16 +33,17 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExpenseDto extends BaseDto {
     @JsonProperty(value = "number")
     private String protocolNumber;
-    @NotNull(message = "Tipo de despesa deve ser preenchida")
+    @NotNull(message = "{tipo.despesa.not.null}")
     @Enumerated(EnumType.STRING)
     private ExpenseType expenseType;
-    @NotNull(message = "A data do protocolo deve ser preenchida")
+    @NotNull(message = "{data.protocolo.not.null}")
     @JsonProperty(value = "date")
     @DateTimeFormat
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:MM:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime protocolDate;
@@ -49,13 +51,12 @@ public class ExpenseDto extends BaseDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @NotNull(message = "A data do vencimento deve ser informada")
+    @NotNull(message = "{data.vencimento.not.null}")
     private LocalDate expireDate;
-    @NotBlank(message = "O credor deve ser informado")
+    @NotBlank(message = "{credor.not.null}")
     private String creditor;
     private String description;
     @Enumerated(EnumType.STRING)
     private ExpenseStatus status;
     private List<CommitmentDto> commitments = new ArrayList<>();
-
 }
