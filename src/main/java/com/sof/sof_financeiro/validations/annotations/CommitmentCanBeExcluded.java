@@ -1,6 +1,6 @@
 package com.sof.sof_financeiro.validations.annotations;
 
-import com.sof.sof_financeiro.validations.validators.ExpenseCanBeExcludedValidator;
+import com.sof.sof_financeiro.validations.validators.CommitmentCanBeExcludedValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 
 @Target({ElementType.PARAMETER, ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ExpenseCanBeExcludedValidator.class)
+@Constraint(validatedBy = CommitmentCanBeExcludedValidator.class)
 @Documented
 public @interface CommitmentCanBeExcluded {
     String message() default "{can.not.exclude.commitment.message}";

@@ -17,10 +17,13 @@ import java.util.Optional;
 public class CommitmentServiceImpl implements CommitmentService {
     private final CommitmentMapper commitmentMapper;
     private final CommitmentRepository commitmentRepository;
+    private final SetExpenseStatusService setExpenseStatusService;
 
-    public CommitmentServiceImpl(CommitmentMapper commitmentMapper, CommitmentRepository commitmentRepository) {
+    public CommitmentServiceImpl(CommitmentMapper commitmentMapper, CommitmentRepository commitmentRepository,
+                                 SetExpenseStatusService setExpenseStatusService) {
         this.commitmentMapper = commitmentMapper;
         this.commitmentRepository = commitmentRepository;
+        this.setExpenseStatusService = setExpenseStatusService;
     }
 
     @Override
@@ -32,6 +35,7 @@ public class CommitmentServiceImpl implements CommitmentService {
             commitment.setCommitmentNumber(NumberGeneratorUtil.getNextNumber("NE", lastNumber));
         }
         Commitment savedCommit = commitmentRepository.save(commitment);
+        setExpenseStatusService.checkAndSetStatus(commitment.getExpense().getId());
         return commitmentMapper.commitmentToCommitmentDto(savedCommit);
     }
 

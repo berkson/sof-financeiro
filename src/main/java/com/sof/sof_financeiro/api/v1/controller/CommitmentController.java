@@ -4,6 +4,7 @@ import com.sof.sof_financeiro.api.v1.model.CommitmentDto;
 import com.sof.sof_financeiro.services.CommitmentService;
 import com.sof.sof_financeiro.validations.annotations.CheckCommitmentValue;
 import com.sof.sof_financeiro.validations.annotations.CommitmentCanBeExcluded;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +27,7 @@ public class CommitmentController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public CommitmentDto save(@RequestBody @CheckCommitmentValue CommitmentDto commitmentDto) {
+    public CommitmentDto save(@RequestBody @CheckCommitmentValue @Valid  CommitmentDto commitmentDto) {
         return commitmentService.save(commitmentDto);
     }
 

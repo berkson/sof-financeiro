@@ -31,8 +31,9 @@ public class PaymentDto extends BaseDto {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty(value = "date")
-    @NotNull(message = "A data de pagamento deve ser informada")
+    @NotNull(message = "{payment.date.not.null}")
     private LocalDate paymentDate;
     private String note;
+    @NotNull(message = "{commitment.not.null}")
     private Long commitmentId;
 }
