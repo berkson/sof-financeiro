@@ -43,6 +43,7 @@ public class Expense extends BaseEntity implements HasValue {
     private String creditor;
     private String description;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ExpenseStatus status;
     @OneToMany(mappedBy = "expense", fetch = FetchType.LAZY)
     private List<Commitment> commitments = new ArrayList<>();
