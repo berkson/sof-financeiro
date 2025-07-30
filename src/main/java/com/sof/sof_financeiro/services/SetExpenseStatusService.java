@@ -57,7 +57,6 @@ public class SetExpenseStatusService {
             if (paymentCmp == 0) {
                 changeStatus(expense.getId(), ExpenseStatus.WAITING_PAYMENT);
                 expense.setStatus(ExpenseStatus.WAITING_PAYMENT);
-                return;
             } else if (paymentSum.compareTo(expense.getValue()) < 0) {
                 changeStatus(expense.getId(), ExpenseStatus.PARTIAL_PAYMENT);
                 expense.setStatus(ExpenseStatus.PARTIAL_PAYMENT);
