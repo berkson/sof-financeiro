@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,6 +18,9 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     @Query("SELECT COALESCE(SUM(p.value), 0) FROM Payment p WHERE p.commitment IN :commitments")
     BigDecimal sumPaymentsByCommitments(List<Commitment> commitments);
+
+    @Query("SELECT COALESCE(SUM(p.value), 0) FROM Payment p WHERE p.commitment = :id")
+    BigDecimal sumPaymentsByCommitment(@Param(value = "id") Long commitmentId);
 
     Page<Payment> findPaymentsByCommitment_Id(Long id, PageRequest pageRequest);
 }

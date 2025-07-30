@@ -1,7 +1,6 @@
 package com.sof.sof_financeiro.validations.validators;
 
 import com.sof.sof_financeiro.api.v1.model.PaymentDto;
-import com.sof.sof_financeiro.repository.ExpenseRepository;
 import com.sof.sof_financeiro.repository.PaymentRepository;
 import com.sof.sof_financeiro.services.CommitmentService;
 import com.sof.sof_financeiro.validations.annotations.CheckPaymentValue;
@@ -24,14 +23,12 @@ public class CheckPaymentValueValidator implements ConstraintValidator<CheckPaym
     private final PaymentRepository paymentRepository;
     private final MessageSource messageSource;
 
-    private final ExpenseRepository expenseRepository;
 
     public CheckPaymentValueValidator(CommitmentService commitmentService, PaymentRepository paymentRepository,
-                                      MessageSource messageSource, ExpenseRepository expenseRepository) {
+                                      MessageSource messageSource) {
         this.commitmentService = commitmentService;
         this.paymentRepository = paymentRepository;
         this.messageSource = messageSource;
-        this.expenseRepository = expenseRepository;
     }
 
     @Override
@@ -39,10 +36,9 @@ public class CheckPaymentValueValidator implements ConstraintValidator<CheckPaym
         if (dto == null || dto.getCommitmentId() == null) return false;
 
         var commitment = commitmentService.getById(dto.getCommitmentId()).orElseThrow();
-        var expense = expenseRepository.findById(commitment.getExpense().getId()).orElseThrow();
-        BigDecimal paymentSum = paymentRepository.sumPaymentsByCommitments(expense.getCommitments());
+        BigDecimal paymentSum = paymentRepository.sumPaymentsByCommitment(commitment.getId());
         var result = paymentSum.add(dto.getValue());
-        boolean isValid = result.compareTo(expense.getValue()) <= 0;
+        boolean isValid = result.compareTo(commitment.getValue()) <= 0;
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();
