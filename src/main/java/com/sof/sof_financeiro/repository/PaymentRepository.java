@@ -19,7 +19,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     @Query("SELECT COALESCE(SUM(p.value), 0) FROM Payment p WHERE p.commitment IN :commitments")
     BigDecimal sumPaymentsByCommitments(List<Commitment> commitments);
 
-    @Query("SELECT COALESCE(SUM(p.value), 0) FROM Payment p WHERE p.commitment = :id")
+    @Query("SELECT COALESCE(SUM(p.value), 0) FROM Payment p WHERE p.commitment.id a = :id")
     BigDecimal sumPaymentsByCommitment(@Param(value = "id") Long commitmentId);
 
     Page<Payment> findPaymentsByCommitment_Id(Long id, PageRequest pageRequest);
