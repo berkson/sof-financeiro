@@ -7,6 +7,7 @@ CREATE TABLE expenses
     expire_date     DATE,
     creditor        VARCHAR(255)   NOT NULL,
     description     VARCHAR(255),
+    status          VARCHAR(255)   NOT NULL,
     value           NUMERIC(19, 2) NOT NULL
 );
 

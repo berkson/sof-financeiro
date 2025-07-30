@@ -27,7 +27,6 @@ public class Payment extends BaseEntity {
     private String paymentNumber;
     @Column(name = "payment_date", nullable = false)
     private LocalDate paymentDate;
-    private BigDecimal value;
     private String note;
     @ManyToOne
     @JoinColumn(name = "commitment_id")

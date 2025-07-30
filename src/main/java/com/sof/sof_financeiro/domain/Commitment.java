@@ -1,5 +1,6 @@
 package com.sof.sof_financeiro.domain;
 
+import com.sof.sof_financeiro.shared.HasValue;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,13 +24,11 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @AttributeOverride(name = "id", column = @Column(name = "commitment_id"))
-public class Commitment extends BaseEntity {
+public class Commitment extends BaseEntity implements HasValue {
     @Column(name = "commitment_number", nullable = false, unique = true)
     private String commitmentNumber;
     @Column(name = "commitment_date", nullable = false)
     private LocalDate commitmentDate;
-    @Column(nullable = false)
-    private BigDecimal value;
     private String note;
     @ManyToOne
     @JoinColumn(name = "expense_id")

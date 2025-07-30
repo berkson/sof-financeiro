@@ -2,6 +2,7 @@ package com.sof.sof_financeiro.api.v1.controller;
 
 import com.sof.sof_financeiro.api.v1.model.CommitmentDto;
 import com.sof.sof_financeiro.services.CommitmentService;
+import com.sof.sof_financeiro.validations.annotations.CheckCommitmentValue;
 import com.sof.sof_financeiro.validations.annotations.CommitmentCanBeExcluded;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,8 +26,8 @@ public class CommitmentController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public CommitmentDto save(@RequestBody CommitmentDto expense) {
-        return commitmentService.save(expense);
+    public CommitmentDto save(@RequestBody @CheckCommitmentValue CommitmentDto commitmentDto) {
+        return commitmentService.save(commitmentDto);
     }
 
     @DeleteMapping(value = "{id}")
@@ -34,4 +35,5 @@ public class CommitmentController {
     public void delete(@PathVariable @CommitmentCanBeExcluded Long id) {
         commitmentService.delete(id);
     }
+
 }

@@ -32,7 +32,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ExpenseDto {
+public class ExpenseDto extends BaseDto {
     @JsonProperty(value = "number")
     private String protocolNumber;
     @NotNull(message = "Tipo de despesa deve ser preenchida")
@@ -54,6 +54,7 @@ public class ExpenseDto {
     @NotBlank(message = "O credor deve ser informado")
     private String creditor;
     private String description;
+    @Enumerated(EnumType.STRING)
     private ExpenseStatus status;
     private List<CommitmentDto> commitments = new ArrayList<>();
 

@@ -1,6 +1,8 @@
 package com.sof.sof_financeiro.domain;
 
+import com.sof.sof_financeiro.enums.ExpenseStatus;
 import com.sof.sof_financeiro.enums.ExpenseType;
+import com.sof.sof_financeiro.shared.HasValue;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +28,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @AttributeOverride(name = "id", column = @Column(name = "expense_id"))
-public class Expense extends BaseEntity {
+public class Expense extends BaseEntity implements HasValue {
 
     @Column(name = "protocol_number", unique = true, nullable = false)
     private String protocolNumber;
@@ -41,7 +43,7 @@ public class Expense extends BaseEntity {
     private String creditor;
     private String description;
     @Column(nullable = false)
-    private BigDecimal value;
+    private ExpenseStatus status;
     @OneToMany(mappedBy = "expense", fetch = FetchType.LAZY)
     private List<Commitment> commitments = new ArrayList<>();
 
