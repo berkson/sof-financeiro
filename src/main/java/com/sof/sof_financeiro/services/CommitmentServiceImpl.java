@@ -1,9 +1,9 @@
 package com.sof.sof_financeiro.services;
 
+import com.sof.sof_financeiro.api.v1.model.CommitmentDto;
 import com.sof.sof_financeiro.domain.Commitment;
 import com.sof.sof_financeiro.domain.Expense;
 import com.sof.sof_financeiro.mappers.CommitmentMapper;
-import com.sof.sof_financeiro.api.v1.model.CommitmentDto;
 import com.sof.sof_financeiro.repository.CommitmentRepository;
 import com.sof.sof_financeiro.repository.ExpenseRepository;
 import com.sof.sof_financeiro.util.NumberGeneratorUtil;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -56,8 +57,12 @@ public class CommitmentServiceImpl implements CommitmentService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void delete(Long id) {
+        Expense expense = commitmentRepository.findById(id).orElseThrow().getExpense();
+        expense.getCommitments().removeIf(c -> Objects.equals(c.getId(), id));
         commitmentRepository.deleteById(id);
+        setExpenseStatusService.checkAndSetStatus(expense);
     }
 
     @Override
