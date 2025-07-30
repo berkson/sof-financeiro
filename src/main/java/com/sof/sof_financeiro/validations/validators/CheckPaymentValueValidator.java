@@ -1,14 +1,17 @@
 package com.sof.sof_financeiro.validations.validators;
 
 import com.sof.sof_financeiro.api.v1.model.PaymentDto;
+import com.sof.sof_financeiro.repository.ExpenseRepository;
+import com.sof.sof_financeiro.repository.PaymentRepository;
 import com.sof.sof_financeiro.services.CommitmentService;
-import com.sof.sof_financeiro.util.ValidateValuesUtil;
 import com.sof.sof_financeiro.validations.annotations.CheckPaymentValue;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 
 /**
  * Created By : Berkson Ximenes
@@ -18,20 +21,28 @@ import org.springframework.stereotype.Component;
 public class CheckPaymentValueValidator implements ConstraintValidator<CheckPaymentValue, PaymentDto> {
 
     private final CommitmentService commitmentService;
+    private final PaymentRepository paymentRepository;
     private final MessageSource messageSource;
 
-    public CheckPaymentValueValidator(CommitmentService commitmentService, MessageSource messageSource) {
+    private final ExpenseRepository expenseRepository;
+
+    public CheckPaymentValueValidator(CommitmentService commitmentService, PaymentRepository paymentRepository,
+                                      MessageSource messageSource, ExpenseRepository expenseRepository) {
         this.commitmentService = commitmentService;
+        this.paymentRepository = paymentRepository;
         this.messageSource = messageSource;
+        this.expenseRepository = expenseRepository;
     }
 
     @Override
     public boolean isValid(PaymentDto dto, ConstraintValidatorContext context) {
         if (dto == null || dto.getCommitmentId() == null) return false;
 
-        var commitment = commitmentService.getById(dto.getCommitmentId()).orElse(null);
-        boolean isValid = commitment != null &&
-                        ValidateValuesUtil.isSetOfItemsValuesValid(dto.getValue(), commitment.getPayments());
+        var commitment = commitmentService.getById(dto.getCommitmentId()).orElseThrow();
+        var expense = expenseRepository.findById(commitment.getExpense().getId()).orElseThrow();
+        BigDecimal paymentSum = paymentRepository.sumPaymentsByCommitments(expense.getCommitments());
+        var result = paymentSum.add(dto.getValue());
+        boolean isValid = result.compareTo(expense.getValue()) <= 0;
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();
