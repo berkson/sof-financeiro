@@ -43,6 +43,8 @@ Este projeto foi desenvolvido como parte de um processo seletivo e demonstra hab
 
 Nota: **O Flyway se encarregará de criar o banco de dados e aplicar as migrações iniciais automaticamente.**
 
+![Diagrama UML](sop-financeiro-uml.png)
+
 📂 Estrutura do Projeto
  ```bash
 sop-financeiro/
@@ -59,5 +61,5 @@ sop-financeiro/
  - Este projeto é de uso livre.
 
 👤 Autor
- - Berkson
+ - Berkson Ximenes Soares
  - GitHub: [Sop-Financeiro](https://github.com/berkson/sop-financeiro)
