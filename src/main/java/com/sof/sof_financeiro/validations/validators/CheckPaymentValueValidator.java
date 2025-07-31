@@ -11,6 +11,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Created By : Berkson Ximenes
@@ -36,8 +37,20 @@ public class CheckPaymentValueValidator implements ConstraintValidator<CheckPaym
         if (dto == null || dto.getCommitmentId() == null) return false;
 
         var commitment = commitmentService.getById(dto.getCommitmentId()).orElseThrow();
-        BigDecimal paymentSum = paymentRepository.sumPaymentsByCommitment(commitment.getId());
-        var result = paymentSum.add(dto.getValue());
+        final BigDecimal paymentSum = paymentRepository.sumPaymentsByCommitment(commitment.getId());
+
+        // validar se é uma edição de valor e atuar
+        var result = commitment.getPayments()
+                .stream()
+                .filter(p -> Objects.equals(p.getId(), dto.getId()))
+                .findFirst()
+                .map(p -> {
+                    var r = p.getValue().compareTo(dto.getValue());
+                    if (r > 0) return paymentSum.subtract(p.getValue().subtract(dto.getValue()));
+                    if (r < 0) return paymentSum.add(dto.getValue().subtract(p.getValue()));
+                    return paymentSum.subtract(dto.getValue());
+                }).orElse(paymentSum.add(dto.getValue()));
+
         boolean isValid = result.compareTo(commitment.getValue()) <= 0;
 
         if (!isValid) {

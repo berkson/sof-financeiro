@@ -2,6 +2,7 @@ package com.sof.sof_financeiro.services;
 
 import com.sof.sof_financeiro.api.v1.model.PaymentDto;
 import com.sof.sof_financeiro.domain.Commitment;
+import com.sof.sof_financeiro.domain.Expense;
 import com.sof.sof_financeiro.domain.Payment;
 import com.sof.sof_financeiro.mappers.PaymentMapper;
 import com.sof.sof_financeiro.repository.CommitmentRepository;
@@ -58,8 +59,12 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void delete(Long id) {
+        Payment payment = paymentRepository.findById(id).orElseThrow();
+        Expense expense = commitmentRepository.findById(payment.getCommitment().getId()).orElseThrow().getExpense();
         paymentRepository.deleteById(id);
+        setExpenseStatusService.checkAndSetStatus(expense);
     }
 
     @Override
