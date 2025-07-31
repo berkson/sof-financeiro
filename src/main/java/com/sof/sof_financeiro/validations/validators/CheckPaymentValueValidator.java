@@ -3,6 +3,7 @@ package com.sof.sof_financeiro.validations.validators;
 import com.sof.sof_financeiro.api.v1.model.PaymentDto;
 import com.sof.sof_financeiro.repository.PaymentRepository;
 import com.sof.sof_financeiro.services.CommitmentService;
+import com.sof.sof_financeiro.util.ValueUtil;
 import com.sof.sof_financeiro.validations.annotations.CheckPaymentValue;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -44,12 +45,8 @@ public class CheckPaymentValueValidator implements ConstraintValidator<CheckPaym
                 .stream()
                 .filter(p -> Objects.equals(p.getId(), dto.getId()))
                 .findFirst()
-                .map(p -> {
-                    var r = p.getValue().compareTo(dto.getValue());
-                    if (r > 0) return paymentSum.subtract(p.getValue().subtract(dto.getValue()));
-                    if (r < 0) return paymentSum.add(dto.getValue().subtract(p.getValue()));
-                    return paymentSum.subtract(dto.getValue());
-                }).orElse(paymentSum.add(dto.getValue()));
+                .map(p -> ValueUtil.adjustSum(p.getValue(), dto.getValue(), paymentSum))
+                .orElse(paymentSum.add(dto.getValue()));
 
         boolean isValid = result.compareTo(commitment.getValue()) <= 0;
 
