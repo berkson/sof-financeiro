@@ -25,9 +25,16 @@ public class CommitmentController {
         this.commitmentService = commitmentService;
     }
 
+    @GetMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CommitmentDto getPayment(@PathVariable Long id) {
+        return commitmentService.getById(id).orElseThrow();
+    }
+
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public CommitmentDto save(@RequestBody @CheckCommitmentValue @Valid  CommitmentDto commitmentDto) {
+    public CommitmentDto save(@RequestBody @CheckCommitmentValue @Valid CommitmentDto commitmentDto) {
         return commitmentService.save(commitmentDto);
     }
 

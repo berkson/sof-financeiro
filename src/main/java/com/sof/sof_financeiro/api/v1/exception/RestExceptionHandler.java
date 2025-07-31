@@ -4,6 +4,8 @@ import com.sof.sof_financeiro.api.v1.exception.model.ApiError;
 import com.sof.sof_financeiro.api.v1.exception.model.ApiErrors;
 import com.sof.sof_financeiro.api.v1.exception.model.ValidationError;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -15,11 +17,13 @@ import org.springframework.lang.NonNull;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
@@ -69,6 +73,27 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(status).body(ApiErrors.builder().error(apiError).build());
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrors handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
+        List<String> list = new ArrayList<>();
+
+        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+            Object object = violation.getInvalidValue();
+            String value = (object.toString().contains("$") || object.toString().contains("@")) ? ""
+                    : object.toString();
+            String restriction = "Valor: " + value + " " + violation.getMessage();
+            list.add(restriction);
+        }
+
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
+                getPath(request));
+
+        apiError.setDetails(list);
+
+
+        return ApiErrors.builder().error(apiError).build();
+    }
 
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<Object> handleBadRequests(Exception ex, WebRequest request) {
