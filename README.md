@@ -56,6 +56,16 @@ sop-financeiro/
 ├── docker-compose.yaml           # Define o container PostgreSQL
 ├── pom.xml                       # Dependências Maven
 ```
+## 🔗 Acesso à coleção
+
+- Arquivo que pode ser importado no Postman, localizado no diretório raiz do projeto, **SOP_COLLECTION.postman_collection.json** ou também nas opções abaixo:
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/deathglory/workspace/test/collection/8996336-ee4d80b9-3f3e-4e07-a242-505e7be39aa7?action=share&creator=8996336)
+
+Ou acesse diretamente pelo link:  
+🔗 [Coleção no Postman](https://www.postman.com/deathglory/workspace/test/collection/8996336-ee4d80b9-3f3e-4e07-a242-505e7be39aa7?action=share&creator=8996336)
+
+---
 
 📄 Licença
  - Este projeto é de uso livre.
